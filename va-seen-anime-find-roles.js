@@ -10,8 +10,7 @@ var headers = document.getElementsByClassName("normal_header");
 for(thing of headers){
 	if(thing.childNodes.length >= 2 && thing.childNodes[1].nodeType == Node.TEXT_NODE && thing.childNodes[1].nodeValue == "Voice Acting Roles"){
 		if(thing.nextElementSibling.tagName.toLowerCase() == "table"){
-			var VAtbody = thing.nextElementSibling.children[0]; //Possibly unnecessary variable, just put things in eliList
-			var eliList = VAtbody.children;
+			var eliList = thing.nextElementSibling.children[0].children;
 			listloop:{
 				for(var eliItem of eliList){
 					try{
@@ -47,12 +46,39 @@ for(thing of headers){
 		}
 	}
 }
-function AddOnListAnime(onListAnime){
+function AddOnListAnime(let onListAnime){
 	onlistList.put({
 		aname:(onListAnime.children[1].children[0].innerText),
 		alink:(onListAnime.children[1].children[0].getAttribute("href")),
 		aimagesrc:(onListAnime.children[0].children[0].children[0].children[0].getAttribute("src"))
 	});
+	//if(highlighting == true)
+	HighlightOnList(onListAnime)
+}
+function HighlightOnList(let highlightTarget){
+	let highlightColor;
+	try{
+		switch (highlightTarget.children[1].children[1].children[0].getAttribute("title")){
+			case "Watching":
+				highlightColor = //green
+				break;
+			case "Completed":
+				highlightColor = //blue
+				break;
+			case "_on hold_"://Placeholder
+				highlightColor = //orangish
+				break;
+			case "_dropped_"://Placeholder
+				highlightColor = //red?
+				break;
+			default:
+				highlightColor = //Don't know -> GR(A|E)Y
+		}
+		highlightTarget.style.backgroundColor = highlightColor
+	}
+	catch (err){
+		console.log("Error highlighting anime on Voice Acting Roles table.")
+	}
 }
 
 /* Incomplete V0.2
